@@ -2,10 +2,13 @@ from requests import Session, Request
 from bs4 import BeautifulSoup
 import time
 import csv
+
 '''
 By Angelis Pseftis
 
 '''
+
+
 BASE_URL = 'https://nvd.nist.gov{}'
 INDEX_URL = 'https://nvd.nist.gov/vuln/search/results?adv_search=false&form_type=basic&results_type=overview&search_type=all&query=DOS'
 
@@ -22,6 +25,8 @@ session = Session()
 
 csv_file = open('results.csv', "wt")
 writer = csv.writer(csv_file, delimiter=',')    
+# Write headings
+writer.writerow(["CVE-ID", "Description", "Severity"])
 
 url = INDEX_URL
 
