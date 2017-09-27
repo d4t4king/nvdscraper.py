@@ -2,16 +2,19 @@ from requests import Session, Request
 from bs4 import BeautifulSoup
 import time
 import csv
+import argparse
 
 '''
 By Angelis Pseftis
 
 '''
 
+argparser = argparse.ArgumentParser("Get the CVE's!")
+argparser.add_argument('-o', '--output', dest='output', default='results.csv', help='Full path to write the output file')
+args = argparser.parse_args()
 
 BASE_URL = 'https://nvd.nist.gov{}'
 INDEX_URL = 'https://nvd.nist.gov/vuln/search/results?adv_search=false&form_type=basic&results_type=overview&search_type=all&query=DOS'
-
 
 request_headers = {
 	'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
@@ -23,7 +26,7 @@ request_headers = {
 }
 session = Session()
 
-csv_file = open('results.csv', "wt")
+csv_file = open(args.output, "wt")
 writer = csv.writer(csv_file, delimiter=',')    
 # Write headings
 writer.writerow(["CVE-ID", "Description", "Severity"])
